@@ -59,18 +59,7 @@ class Processor():
         df = pd.merge(df0, df1, on=['ticker','date'], how='inner')
         df = df.drop(['Unnamed: 0', 'datePublished'], axis = 1)
         return df
-        
 
-    def train(self, titles, labels):
-        if titles is False:
-            raise Exception('Titles needs to be the titles of your dataframe')
-        if len(titles) != len(labels):
-            raise Exception('Titles and Labels sizes are not the same. Title is: {}. Label is {}'.format(len(titles, len(labels))))
-
-        vectorizer = CountVectorizer()
-        classifier = MultinomialNB()
-        counts = vectorizer.fit_transform(titles)
-        classifier.fit(counts, labels)
 
     def main():
         pass
