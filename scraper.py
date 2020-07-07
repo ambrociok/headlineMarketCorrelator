@@ -22,12 +22,14 @@ class Scraper():
         ### This function gets the article names and descriptions from newsapi
         #       This is meant to only get daily information for every article with
         #       the ticker in the title
+        ticker_name = ['NASDAQ','Dow Jones','S&P 500', 'QQQ','Microsoft','Apple','Amazon','Goldman Sachs','Google','Facebook']
+        ticker_dict = {self.ticker[i]:ticker_name[i] for i in range(len(ticker_name))}
         articles = []
         for tick in self.ticker:
             url = ('http://newsapi.org/v2/everything?'
                     'q={}&'
                     'apiKey={}')
-            response = requests.get(url.format(tick, constants.newsapikey))
+            response = requests.get(url.format(ticker_dict[tick], constants.newsapikey))
             for article in response.json()['articles']:
                 articles.append([article['publishedAt'], tick , article['title'], article['description'] ])
         return articles

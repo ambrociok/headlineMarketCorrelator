@@ -14,6 +14,7 @@ def automation():
     #Update the fincial data to today's. Ensures getting previous day's information
     y = scraper.Scraper()
     y.getFinancialData()
+    y.getHeadlines()
 
     #Create a massive dataframe for processing
     x = processor.Processor()
@@ -27,6 +28,7 @@ def automation():
     counter = CountVectorizer(ngram_range=(2, 3))
     classifier = MultinomialNB()    
     counter.fit(df['title'] + df['description'])
+    
     training_counts = counter.transform(df['title'])
     labels = df['label']
 
@@ -39,7 +41,8 @@ def automation():
 
     chance = 100*sum(prediction)/len(prediction)
 
-    print('Chances of market going up : {0:.2f}%'.format(100*sum(prediction)/len(prediction)))
+    print('Chances of market going up tomorrow: {0:.2f}%'.format(100*sum(prediction)/len(prediction)))
+    print(df_test.head())
 
     with open('predictions/predictionsForTomorrow.csv', 'a', newline = '') as currentCSV:
         writer = csv.writer(currentCSV)

@@ -12,7 +12,7 @@ import pandas as pd
 #%%
 x = processor.Processor()
 df = x.mergeLabels()
-print(df.dtype)
+print(df.dtypes)
 
 #%% Initialize the models
 
