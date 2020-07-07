@@ -14,7 +14,7 @@ def automation():
     #Update the fincial data to today's. Ensures getting previous day's information
     y = scraper.Scraper()
     y.getFinancialData()
-    y.getHeadlines()
+    y.createCSV()
 
     #Create a massive dataframe for processing
     x = processor.Processor()
