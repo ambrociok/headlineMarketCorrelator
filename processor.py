@@ -32,7 +32,6 @@ class Processor():
                 return 1
             else:
                 return 0
-
         dfs = []
         counter = 0
         filenames = glob.glob("financialData/*.csv")
@@ -41,7 +40,7 @@ class Processor():
             dfs.append(pd.read_csv(filename, usecols = ['Date','Open','Close']))
             dfs[counter]['ticker'] = name.group(1)
             counter += 1
-        df = pd.concat(dfs, ignore_index=True)
+        df = pd.concat(dfs, ignore_index=True, sort=False)
         df['label'] = (df['Open'] - df['Close'])/df['Close']
         df['label'] = df.apply(lambda row : labeler(row['label']), axis = 1)
         df = df[['Date', 'ticker', 'label']]
@@ -57,15 +56,5 @@ class Processor():
         df0['date'] = [a[:10] for a in df0['datePublished']]
         df1 = df1.rename(columns = {'Date':'date'})
         df = pd.merge(df0, df1, on=['ticker','date'], how='inner')
-        df = df.drop(['Unnamed: 0', 'datePublished'], axis = 1)
+        df = df.drop(['Unnamed: 0', 'datePublished'], axis = 1).groupby(['date', 'ticker'])
         return df
-
-
-    def main():
-        pass
-
-    if __name__ == "__main__":
-        ### This makes it such that your code will be executed if the entire file
-        #       is called from the command line. Anything in main will be
-        #       ignored if simply imported.  
-        main()
