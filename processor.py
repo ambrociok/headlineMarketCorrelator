@@ -56,5 +56,5 @@ class Processor():
         df0['date'] = [a[:10] for a in df0['datePublished']]
         df1 = df1.rename(columns = {'Date':'date'})
         df = pd.merge(df0, df1, on=['ticker','date'], how='inner')
-        df = df.drop(['Unnamed: 0', 'datePublished'], axis = 1).groupby(['date', 'ticker'])
+        df = df.drop(['Unnamed: 0', 'datePublished'], axis = 1)
         return df

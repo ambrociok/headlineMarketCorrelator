@@ -9,11 +9,10 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 import processor
 import pandas as pd
-import seaborn as sns  
 #%%
 x = processor.Processor()
 df = x.mergeLabels()
-print(df.columns)
+print(df.dtype)
 
 #%% Initialize the models
 
