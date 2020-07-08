@@ -19,7 +19,7 @@ class Scraper():
         self.hour = hour
     
     def getHeadlines(self):
-        ### This function gets the article names and descriptions from newsapi
+        ### This method gets the article names and descriptions from newsapi
         #       This is meant to only get daily information for every article with
         #       the ticker in the title
         ticker_name = ['NASDAQ','Dow Jones','S&P 500', 'QQQ','Microsoft','Apple','Amazon','Goldman Sachs','Google','Facebook']
@@ -34,8 +34,22 @@ class Scraper():
                 articles.append([article['publishedAt'], tick , article['title'], article['description'] ])
         return articles
 
+    def getNewHeadlines(self):
+        ### This method gets the newest headline information that isn't necessarily
+        #       related to any ticker. This will be used as the basis for daily predictions
+        articles = []
+        url = ('https://newsapi.org/v2/top-headlines?country=us&category=business&'
+                'apiKey={}')
+        response = requests.get(url.format(constants.newsapikey))
+        for article in response.json()['articles']:
+            articles.append([article['publishedAt'], article['title'], article['description'] ])
+        df = pd.DataFrame(articles).rename(columns = {0: 'datePublished',1:'title', 2:'description'})
+ #       df.to_csv('dailyHeadlinesUnrelated/{}.csv'.format(self.date), encoding='utf-8')
+        return df
+
+        
     def createDataframe(self):
-        ### Creates a dataframe of the day using the getArticleHeadlines function
+        ### Creates a dataframe of the day using the getArticleHeadlines method
         newArticles = self.getHeadlines()
         df = pd.DataFrame(newArticles).rename(columns = {0: 'datePublished', 1: 'ticker', 2:'title', 3:'description'})
 #        df['date'] = [date] * len(df) Redundant
