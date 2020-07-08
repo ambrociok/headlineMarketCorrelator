@@ -2,6 +2,7 @@ import scraper
 import processor
 import csv
 from datetime import date, datetime
+import time
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 import processor
@@ -40,7 +41,7 @@ def automation():
     prediction = classifier.predict(headline_counts)
     prediction1 = classifier.predict(headline_counts_ticker)
 
-    chance = 100*sum(prediction)/len(prediction)
+    chance = 50*sum(prediction)/len(prediction)
     chanceticker = 100*sum(prediction1)/len(prediction1)
 
     totalChance = (chance + chanceticker)/2
@@ -53,3 +54,4 @@ def automation():
 
 if __name__ == "__main__":
     automation()
+    time.sleep(300)

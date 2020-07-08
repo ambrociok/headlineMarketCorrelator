@@ -1,4 +1,5 @@
 import scraper
+import time
 
 def automation():
     y = scraper.Scraper()
@@ -6,3 +7,4 @@ def automation():
 
 if __name__ == '__main__':
     automation()
+    time.sleep(300)
