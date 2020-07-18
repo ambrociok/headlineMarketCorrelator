@@ -7,6 +7,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 import processor
 import pandas as pd
+import numpy as np
 
 def automation(): 
     d = str(date.today())
@@ -41,12 +42,16 @@ def automation():
     prediction = classifier.predict(headline_counts)
     prediction1 = classifier.predict(headline_counts_ticker)
 
-    chance = 50*sum(prediction)/len(prediction)
+    chance = 100*sum(prediction)/len(prediction)
     chanceticker = 100*sum(prediction1)/len(prediction1)
 
     totalChance = (chance + chanceticker)/2
 
     print('Chances of market going up tomorrow: {0:.2f}%'.format(totalChance))
+    print('New Headline Chances: {0:.2f}%'.format(chance))
+    print('Ticker Headline Chances: {0:.2f}%'.format(chanceticker))
+    print('Prediction New Headline Length: {}'.format(np.size(classifier.predict_proba(headline_counts), 0 )))
+    print('Prediction Ticker Headline Length: {}'.format(np.size(classifier.predict_proba(headline_counts_ticker), 0 )))
 
     with open('predictions/predictionsForTomorrow.csv', 'a', newline = '') as currentCSV:
         writer = csv.writer(currentCSV)
@@ -54,4 +59,4 @@ def automation():
 
 if __name__ == "__main__":
     automation()
-    time.sleep(300)
+    time.sleep(5)

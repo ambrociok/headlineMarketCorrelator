@@ -7,4 +7,4 @@ def automation():
 
 if __name__ == '__main__':
     automation()
-    time.sleep(300)
+    time.sleep(1)

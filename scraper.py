@@ -44,7 +44,7 @@ class Scraper():
         for article in response.json()['articles']:
             articles.append([article['publishedAt'], article['title'], article['description'] ])
         df = pd.DataFrame(articles).rename(columns = {0: 'datePublished',1:'title', 2:'description'})
- #       df.to_csv('dailyHeadlinesUnrelated/{}.csv'.format(self.date), encoding='utf-8')
+        df.to_csv('dailyHeadlinesUnrelated/{}.csv'.format(self.date), encoding='utf-8')
         return df
 
         
